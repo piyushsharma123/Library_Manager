@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+{% extends "common.html" %}
+        {% block nav %}
+        <li class="nav-item" role="presentation"><a class="nav-link" href="{% url "dashbord"%}"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a></li>
+        <li class="nav-item" role="presentation"><a class="nav-link " href="{% url "new_profile"%}"><i class="fas fa-user"></i><span>New Member</span></a></li>
+        <li class="nav-item" role="presentation"><a class="nav-link active" href="{% url "members"%}"><i class="fas fa-table"></i><span>Members</span></a></li>
+        <li class="nav-item" role="presentation"><a class="nav-link" href="{% url "login"%}"><i class="far fa-user-circle"></i><span>Login</span></a></li>
+        <li class="nav-item" role="presentation"><a class="nav-link" href="{% url "register"%}"><i class="fas fa-user-circle"></i><span>Register</span></a></li>
+        {% endblock %}
+        {% block body_block%}     
+            <div class="container-fluid">
+                <h3 class="text-dark mb-4">Payment Portal</h3>
+                <div class="row mb-3">
+                    <div class="col-lg-4">
+                        <div class="card mb-3">
+                            <div class="card-body text-center shadow"><img class="rounded-circle mb-3 mt-4" src="{{member.file.url}}" width="160" height="160" /></div>
+                        </div>
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <h6 class="text-primary font-weight-bold m-0">Details</h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col"><strong>Name</strong></div>
+                                    <div class="col"><span>{{member.first_name}} {{member.last_name}}</span></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col"><strong>Father&#39;s Names</strong></div>
+                                    <div class="col"><span>{{member.father_name}}</span></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col"><strong>Gender</strong></div>
+                                    <div class="col"><span>{% if member.gender %}Female{% else %}Male{% endif %}</span></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col"><strong>Mobile Number</strong></div>
+                                    <div class="col"><span>{{member.mobile}}</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-8">
+                        <div class="card shadow mb-3">
+                            <div class="card-header py-3">
+                                <p class="text-primary m-0 font-weight-bold">Receipt Detail</p>
+                            </div>
+                            <div class="card-body">
+                                <form method="post">
+                                    {% csrf_token %}
+                                    <div class="form-row">
+                                        <div class="col ">
+                                            <div class="form-group"><label for="last_name"><strong>Batch</strong><br /></label></div>
+                                        </div>
+                                        <div class="col ">
+                                            <div class="form-check"><input type="radio" class="form-check-input" id="formCheck-1" name="bill_batch" value="0" required /><label class="form-check-label" for="formCheck-1">Morning</label></div>
+                                        </div>
+                                        <div class="col ">
+                                            <div class="form-check"><input type="radio" class="form-check-input" id="formCheck-2" name="bill_batch" value="1" /><label class="form-check-label" for="formCheck-2">Evening</label></div>
+                                        </div>
+                                        <div class="col ">
+                                            <div class="form-check"><input type="radio" class="form-check-input" id="formCheck-3" name="bill_batch" value="2" /><label class="form-check-label" for="formCheck-3">Full-Day</label></div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col">
+                                            <div class="form-group"><label for="rec_no"><strong>Receipt Number</strong></label><input type="text" class="form-control" name="rec_no" required/></div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="form-group"><label for="rec_date"><strong>Receipt Date</strong></label><input class="form-control" type="date" name="rec_date" required/></div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col">
+                                            <div class="form-group"><label for="start_on"><strong>Start On</strong><br /></label><input class="form-control" type="date" name="start_on" required/></div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="form-group"><label for="end_on"><strong>End On</strong><br /></label><input class="form-control" type="date" name="end_on" required/></div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col">
+                                            <div class="form-group"><label for="amount"><strong>Amount</strong><br /></label><input type="text" class="form-control" name="amount" required/></div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="form-group"><label for="due"><strong>Due</strong><br /></label><input type="text" class="form-control" name="due" required/></div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col">
+                                            <div class="form-group"><button class="btn btn-primary btn-sm" type="submit">Pay</button></div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                            <div class="col">
+                                <div class="card shadow mb-3">
+                                    <div class="card-header">
+                                        <h5 class="mb-0">Receipts</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <table class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Rec. No.</th>
+                                                        <th>Rec. Date</th>
+                                                        <th>Start On</th>
+                                                        <th>End On</th>
+                                                        <th>Amount</th>
+                                                        <th>Batch</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {% for receipt in bills %}
+                                                    <tr>
+                                                        <td>{{receipt.rec_no}}</td>
+                                                        <td>{{receipt.rec_date}}</td>
+                                                        <td>{{receipt.start_on}}</td>
+                                                        <td>{{receipt.end_on}}</td>
+                                                        <td><i class="fa fa-rupee"></i>&nbsp;{{receipt.amount}}</td>
+                                                        <td>{% ifequal receipt.batch '0' %}Morning{% endifequal %}{% ifequal receipt.batch '1' %}Evening{% endifequal %}{% ifequal receipt.batch '2' %}Full-Day{% endifequal %} </td>
+                                                    </tr>
+                                                    {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                <div class="card shadow mb-5"></div>
+            </div>
+        {% endblock %}        

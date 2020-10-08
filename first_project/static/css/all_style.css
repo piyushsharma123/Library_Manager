@@ -1,0 +1,75 @@
+.batch_col {
+  flex-basis: 0;
+  flex-grow: 1;
+  max-width: 25%;
+}
+
+.radio_margin {
+  padding-top: calc(.375rem + 1px);
+  padding-bottom: calc(.375rem + 1px);
+  position: relative;
+  display: block;
+  padding-left: 1.25rem;
+}
+
+.vl {
+  align-content: center;
+  text-align: center;
+  align-items: center;
+  border-left: 2px solid green;
+  height: 100%;
+  display: inline-block;
+}
+#clear_file{
+  background-color: rgba(78,115,223,0);
+  color: rgb(0,0,0);
+}
+
+.status {
+  height: 30px;
+  background-color: #008000;
+  width: 100%;
+}
+.inputfile {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+.inputlabel,.inputfile + label {
+    font-weight: 700;
+    color: white;
+    background-color: #4e73df;
+    border-color: #4e73df;
+    display: inline-block;
+    cursor: pointer;
+    margin-bottom: 0px;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+.inputfile + label{
+  padding-right: .5rem;
+  padding-left: .5rem;
+  height: 100%;
+  line-height: 2;
+}
+
+.inputfile:focus + label,.inputfile + label:hover {
+    background-color: #2e59d9;
+}
+.inputfile:focus + label {
+  outline: 1px dotted #000;
+  outline: #2e59d9 auto 5px;
+}
+.inputfile + label * {
+  pointer-events: none;
+}
+#clear_file:hover{
+  background-color: #2e59d9;
+}
+.disable{
+  text-decoration: line-through;
+}
+
+

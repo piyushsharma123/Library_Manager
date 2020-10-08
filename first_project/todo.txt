@@ -1,0 +1,24 @@
+TO-DO List
+╔════════════════════════════════════╤═══╗
+║1.delete alert on user and receipts │ √ ║
+╠════════════════════════════════════╪═══╣
+║2.Export formats					 │ ◘ ║
+╠════════════════════════════════════╪═══╣
+║3.Print							 │	 ║
+╠════════════════════════════════════╪═══╣
+║4.search bar					 	 │ ○ ║https://stackoverflow.com/questions/298772/django-template-variables-and-javascript
+╠════════════════════════════════════╪═══╣
+║5.Mail on click					 │	 ║
+╠════════════════════════════════════╪═══╣
+║6.Login and Register Users			 │	 ║
+╠════════════════════════════════════╪═══╣
+║7.Navigation bar active catagories	 │ √ ║
+╠════════════════════════════════════╪═══╣
+║8.Overall search bar				 │ ○ ║
+╠════════════════════════════════════╪═══╣
+║9.settings and theme				 │	 ║
+╠════════════════════════════════════╪═══╣
+║10.add action in admin interface	 │ √ ║ https://simpleisbetterthancomplex.com/tutorial/2017/03/14/how-to-create-django-admin-list-actions.html
+╠════════════════════════════════════╪═══╣
+║11.sortby due date					 │ ○ ║
+╚════════════════════════════════════╧═══╝

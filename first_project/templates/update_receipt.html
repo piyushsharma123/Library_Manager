@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+{% extends "common.html" %}
+        {% block nav %}
+        <li class="nav-item" role="presentation"><a class="nav-link" href="{% url "dashbord"%}"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a></li>
+        <li class="nav-item" role="presentation"><a class="nav-link " href="{% url "new_profile"%}"><i class="fas fa-user"></i><span>New Member</span></a></li>
+        <li class="nav-item" role="presentation"><a class="nav-link active" href="{% url "members"%}"><i class="fas fa-table"></i><span>Members</span></a></li>
+        <li class="nav-item" role="presentation"><a class="nav-link" href="{% url "login"%}"><i class="far fa-user-circle"></i><span>Login</span></a></li>
+        <li class="nav-item" role="presentation"><a class="nav-link" href="{% url "register"%}"><i class="fas fa-user-circle"></i><span>Register</span></a></li>
+        {% endblock %}
+        {% block body_block%}            
+           <div class="container-fluid">
+                <h3 class="text-dark mb-4">Edit Receipt</h3>
+                <div class="row mb-3">
+                    <div class="col-lg-8">
+                        <div class="card shadow mb-3">
+                            <div class="card-header py-3">
+                                <p class="text-primary m-0 font-weight-bold">Receipt Detail</p>
+                            </div>
+                            <div class="card-body">
+                                <form method="post">
+                                    {% csrf_token %}
+                                    <div class="form-row">
+                                        <div class="col batch_col">
+                                            <div class="form-group"><label for="last_name"><strong>Batch</strong><br/></label></div>
+                                        </div>
+                                        <div class="col batch_col">
+                                            <div class="form-check"><input type="radio" class="form-check-input" id="formCheck-1" name="bill_batch" value="0" {% ifequal bill.batch '0' %}checked{% endifequal %}/><label class="form-check-label" for="formCheck-1">Morning</label></div>
+                                        </div>
+                                        <div class="col batch_col">
+                                            <div class="form-check"><input type="radio" class="form-check-input" id="formCheck-2" name="bill_batch" value="1" {% ifequal bill.batch '1' %}checked{% endifequal %}/><label class="form-check-label" for="formCheck-2">Evening</label></div>
+                                        </div>
+                                        <div class="col batch_col">
+                                            <div class="form-check"><input type="radio" class="form-check-input" id="formCheck-3" name="bill_batch" value="2" {% ifequal bill.batch '2' %}checked{% endifequal %}/><label class="form-check-label" for="formCheck-3">Full-Day</label></div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col">
+                                            <div class="form-group"><label for="rec_no"><strong>Receipt Number</strong></label><input type="text" class="form-control" name="rec_no" value="{{bill.rec_no}}"/></div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="form-group"><label for="rec_date"><strong>Receipt Date</strong></label><input class="form-control" type="date" name="rec_date" value="{{bill.rec_date|date:'Y-m-d'}}" /></div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col">
+                                            <div class="form-group"><label for="start_on"><strong>Start On</strong><br /></label><input class="form-control" type="date" name="start_on" value="{{bill.start_on|date:'Y-m-d'}}" /></div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="form-group"><label for="end_on"><strong>End On</strong><br /></label><input class="form-control" type="date" name="end_on" value="{{bill.end_on|date:'Y-m-d'}}" /></div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col">
+                                            <div class="form-group"><label for="amount"><strong>Amount</strong><br /></label><input type="text" class="form-control" name="amount" value="{{bill.amount}}" /></div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="form-group"><label for="due"><strong>Due</strong><br /></label><input type="text" class="form-control" name="due" value="{{due}}" /></div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col">
+                                            <div class="form-group"><button class="btn btn-primary btn-sm" type="submit">Update</button></div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card shadow mb-5"></div>
+            </div>
+        {% endblock %}

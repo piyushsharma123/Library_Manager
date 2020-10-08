@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+{% extends "common.html" %}
+{% load static %}
+        {% block nav %}
+        <li class="nav-item" role="presentation"><a class="nav-link" href="{% url "dashbord"%}"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a></li>
+        <li class="nav-item" role="presentation"><a class="nav-link " href="{% url "new_profile"%}"><i class="fas fa-user"></i><span>New Member</span></a></li>
+        <li class="nav-item" role="presentation"><a class="nav-link active" href="{% url "members"%}"><i class="fas fa-table"></i><span>Members</span></a></li>
+        <li class="nav-item" role="presentation"><a class="nav-link" href="{% url "login"%}"><i class="far fa-user-circle"></i><span>Login</span></a></li>
+        <li class="nav-item" role="presentation"><a class="nav-link" href="{% url "register"%}"><i class="fas fa-user-circle"></i><span>Register</span></a></li>
+        {% endblock %}
+        {% block body_block%}
+            <div class="container-fluid">
+                <h3 class="text-dark mb-4"><a href="javascript:history.go(-1)"><i class="fa fa-arrow-circle-left" style="font-size: 24px;"></i></a> Team</h3>
+                <div class="card shadow">
+                    <div class="card-header py-3">
+                        <div class="row">
+                            <div class="col-auto d-lg-flex mr-auto align-items-lg-center"><strong>Student List</strong></div>
+                            <div class="col-auto"><label class="col-form-label"><input type="search" class="form-control form-control-sm" aria-controls="dataTable" placeholder="Search"></label></div>
+                            <div class="col-auto"><button class="btn btn-primary" type="button">Print</button></div>
+                            <div class="col-auto">
+                                <div class="btn-group"><button class="btn btn-primary" type="button">Export</button><button class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-expanded="false" type="button"></button>
+                                    <div class="dropdown-menu"
+                                        role="menu"><a class="dropdown-item" role="presentation" href="#">First Item</a><a class="dropdown-item" role="presentation" href="#">Second Item</a><a class="dropdown-item" role="presentation" href="#">Third Item</a></div>
+                                </div>
+                            </div>
+                            <div class="col-auto text-center">
+                                <div class="vl"></div>
+                            </div>
+                            <div class="col-auto text-justify"><form action="{% url "new_profile" %}"><button class="btn btn-primary" type="submit">&nbsp; Add&nbsp;&nbsp;</button></form></div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-check" name="choice" value="1"><input class="form-check-input" type="radio" id="formCheck-1"><label class="form-check-label" for="formCheck-1">All</label></div>
+                            </div>
+                            <div class="col">
+                                <div class="form-check"><input class="form-check-input" type="radio" id="formCheck-1"><label class="form-check-label" for="formCheck-1">Inactive</label></div>
+                            </div>
+                            <div class="col">
+                                <div class="form-check"><input class="form-check-input" type="radio" id="formCheck-1"><label class="form-check-label" for="formCheck-1">Active</label></div>
+                            </div>
+                            <div class="col">
+                                <div class="form-check"><input class="form-check-input" type="radio" id="formCheck-1"><label class="form-check-label" for="formCheck-1">Partial Active</label></div>
+                            </div>
+                        </div>
+                        <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
+                            <table class="table dataTable my-0" id="dataTable">
+                                <thead class="bg-white">
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Mobile Number</th>
+                                        <th>Batch</th>
+                                        <th>End date</th>
+                                        <th>Amount Due</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for member in members %}
+                                    <tr class="{% ifequal member.status '3' %}disable border-left-secondary{% endifequal %}">
+                                        <td class="border-left-{% ifequal member.status '0' %}success{% endifequal %}{% ifequal member.status '1' %}warning{% endifequal %}{% ifequal member.status '2' %}danger{% endifequal %}"><img class="rounded-circle mr-2" width="30" height="30" src="{{member.file.url}}"><a href="{% url "member" pk=member.pk %}">{{member.first_name}}  {{member.last_name}}</a></td>
+                                        <td>{{member.mobile}}</td>
+                                        <td>{% with batch=member.bill_data_set.last.batch %}{% ifequal batch '0' %}Morning{% endifequal %}{% ifequal batch '1' %}Evening{% endifequal %}{% ifequal batch '2' %}Full-Day{% endifequal %}{% endwith %}</td>
+                                        <td>{{member.bill_data_set.last.end_on}}</td>
+                                        <td><i class="fa fa-rupee"></i> {{member.due}}</td>
+                                        
+                                        {% if member.bill_data_set.last.days > 0 %}
+                                        <td>Past Due({{member.bill_data_set.last.days|slice:"1:" }} Days)</td>
+                                        {% else %}
+                                        <td>Due in {{member.bill_data_set.last.days}} Days</td>
+                                        {% endif %}    
+                                        <td><a href="{% url "delete_member" pk=member.pk %}" class="alert-del" ><i class="fa fa-trash-o" style="font-size: 24px;"></i></a></td>          
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td><strong>Name</strong></td>
+                                        <td><strong>Moblie Number</strong></td>
+                                        <td><strong>Batch</strong></td>
+                                        <td><strong>End date</strong></td>
+                                        <td><strong>Amount Due</strong></td>
+                                        <td><strong>Status</strong></td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 align-self-center">
+                                <p id="dataTable_info" class="dataTables_info" role="status" aria-live="polite">Showing 1 to 10 of 27</p>
+                            </div>
+                            <div class="col-md-6">
+                                <nav class="d-lg-flex justify-content-lg-end dataTables_paginate paging_simple_numbers">
+                                    <ul class="pagination">
+                                        <li class="page-item disabled"><a class="page-link" href="#" aria-label="Previous"><span aria-hidden="true">«</span></a></li>
+                                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                        <li class="page-item"><a class="page-link" href="#" aria-label="Next"><span aria-hidden="true">»</span></a></li>
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+         {% endblock %}

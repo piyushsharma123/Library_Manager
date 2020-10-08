@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+
+{% extends "common.html" %}
+{% load static %}
+        {% block nav %}
+        <li class="nav-item" role="presentation"><a class="nav-link" href="{% url "dashbord"%}"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a></li>
+        <li class="nav-item" role="presentation"><a class="nav-link active" href="{% url "new_profile"%}"><i class="fas fa-user"></i><span>New Member</span></a></li>
+        <li class="nav-item" role="presentation"><a class="nav-link" href="{% url "members"%}"><i class="fas fa-table"></i><span>Members</span></a></li>
+        <li class="nav-item" role="presentation"><a class="nav-link" href="{% url "login"%}"><i class="far fa-user-circle"></i><span>Login</span></a></li>
+        <li class="nav-item" role="presentation"><a class="nav-link" href="{% url "register"%}"><i class="fas fa-user-circle"></i><span>Register</span></a></li>
+        {% endblock %}
+        {% block body_block%}
+            <div class="container-fluid">
+                <h3 class="text-dark mb-4">New Profile</h3><span>Please fill the form to add new profile</span>
+                <form enctype="multipart/form-data" method="post"  id="user_form" autocomplete="on" >
+                    {% csrf_token %}
+                <div class="row">
+                    <!-- User detail section -->
+                    <div class="col col-md-8">
+                        <div class="card shadow mb-3">
+                            <div class="card-header py-3">
+                                <p class="text-primary m-0 font-weight-bold">Personal Information</p>
+                            </div>
+                            <div class="card-body">
+                                    
+                                    <div class="form-row">
+                                        <div class="col">
+                                            <div class="form-group"><label for="first_name"><strong>First Name</strong></label>{{form.first_name}}<!-- <input class="form-control" type="text" placeholder="John" name="first_name" autofocus="" minlength="3"> --></div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="form-group"><label for="last_name"><strong>Last Name</strong></label>{{form.last_name}}<!-- <input class="form-control" type="text" placeholder="Doe" name="last_name" minlength="3"> --></div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col">
+                                            <div class="form-group"><label for="username"><strong>Father's Name</strong></label>{{form.father_name}}<!-- <input class="form-control" type="text" name="fname" minlength="3"> --></div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="form-group"><label for="email"><strong>Email Address</strong></label>{{form.email}}<!-- <input class="form-control" type="email" placeholder="user@example.com" name="email" inputmode="email"> --></div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col">
+                                            <div class="form-group"><label for="email"><strong>Gender</strong><br></label></div>
+                                        </div>
+                                        {% for x in form.gender %}
+                                        <div class="col">
+                                            <div class="form-check radio_margin">{{x}}<!-- <input class="form-check-input" type="radio" id="new_male" name="new_gender" value="0" checked=""><label class="form-check-label" for="new_male">Male</label> --></div>
+                                        </div>
+                                        <!-- <div class="col">
+                                            <div class="form-check radio_margin"><input class="form-check-input" type="radio" id="new_female" name="new_gender" value="1"><label class="form-check-label" for="new_female">Female</label></div>
+                                        </div> -->
+                                        {% endfor %}
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col">
+                                            <div class="form-group"><label for="email"><strong>Mobile Number</strong></label>{{form.mobile}}<!-- <input class="form-control" type="tel" placeholder="XXXXXXXXXX" name="mobile" inputmode="numeric" maxlength="10"> --></div>
+                                        </div>
+                                        <div class="col"><label for="email"><strong>Date of birth</strong></label>{{form.dob}}<!-- <input class="form-control" type="date" name="dob"> --></div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col">
+                                            <div class="form-group"><label for="email"><strong>Address</strong></label>{{form.address}}<!-- <input class="form-control" type="text"> --></div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col">
+                                            <div class="form-group"><label for="email"><strong>ID Proof</strong></label>{{form.id_proof}}<!-- <select class="form-control" name="idproof"><optgroup label="Select an Option"><option value="1" selected="">Aadhar</option><option value="2">Voter ID</option><option value="3">Driving Licence</option></optgroup></select> -->
+                                            {{form.id_proof_no}}<!-- <input
+                                                    class="form-control" type="text" placeholder="Id number" name="id_proof_no"> --></div>
+                                        </div>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Image Upload Section -->
+                    <div class="col-12 col-md-4">
+                        <div class="card">
+                            <div class="card-body text-center shadow">
+                                <div class="row">
+                                    <div class="col"><img class="rounded-circle mb-3 mt-4" id="blah" src="{% static "img/avatars/profile.jpg" %}" width="160" height="160" alt="User Image"></div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-10 d-xl-flex justify-content-xl-center">
+                                        {{form.file}}<!-- <input class="border rounded shadow" type="file" id="file_input" accept="image/*" name="add_image" style="max-width: 210px;"> -->
+                                            <label for="id_file" class="rounded shadow">Upload Image</label>
+                                    </div>
+                                    <div class="col-2"><button class="btn btn-primary" id="clear_file" type="button">X</button></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card shadow mb-3">
+                            <div class="card-header py-3"></div>
+                            <div class="card-body" >
+                                    <div class="form-row">
+                                        <div class="col"><label><strong>Registration Date</strong></label>{{form.reg_date}}<!-- <input class="form-control" type="date" name="rd"> --></div>
+                                    </div>
+                                    <div class="form-row">
+                                        {% for x in form.pay %}
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <div class="form-check" id="pay_1">{{x}}<!-- <input class="form-check-input" type="radio" id="pay_now_check" name="status" value="0" checked=""><label class="form-check-label" for="pay_now_check"><strong>Pay Now</strong></label> --></div>
+                                            </div>
+                                        </div>
+                                        {% endfor %}
+                                       <!--  <div class="col">
+                                            <div class="form-check" id="pay_2"><input class="form-check-input" type="radio" id="pay_later_check" name="status" value="1"><label class="form-check-label" for="pay_later_check"><strong>Pay Later</strong></label></div>
+                                        </div> -->
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col">
+                                            <div class="form-group text-center"><button class="btn btn-primary" id="submit_btn" type="submit">Register</button></div>
+                                        </div>
+                                    </div>  
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row bill">
+                    <!-- billing detail section -->
+                    <div class="col col-md-8" id="pay_now">
+                        <div class="card shadow mb-3">
+                            <div class="card-header py-3">
+                                <p class="text-primary m-0 font-weight-bold">Billing Information</p>
+                            </div>
+                            <div class="card-body">
+                                    <div class="form-row">
+                                        <div class="col">
+                                            <div class="form-group"><strong>Batch</strong></div>
+                                        </div>
+                                        {% for x in form1.batch %}
+                                        <div class="col">
+                                            <div class="form-check">{{x}}<!-- <input class="form-check-input" type="radio" id="new_morning" name="new_batch" value="0"><label class="form-check-label" for="new_morning">Morning</label> --></div>
+                                        </div>
+                                        {% endfor %}
+                                        <!-- <div class="col">
+                                            <div class="form-check"><input class="form-check-input" type="radio" id="new_evening" name="new_batch" value="1"><label class="form-check-label" for="new_evening">Evening</label></div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="form-check"><input class="form-check-input" type="radio" id="new_full" name="new_batch" value="2"><label class="form-check-label" for="new_full">Full-Day</label></div>
+                                        </div> -->
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col">
+                                            <div class="form-group"><label for="first_name"><strong>Amount</strong><br></label>{{form1.amount}}<!-- <input class="form-control" type="text" placeholder="amount" name="amount"> --></div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="form-group"><label for="first_name"><strong>Due</strong><br></label>{{form1.due}}<!-- <input class="form-control" type="text" name="due"> --></div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col">
+                                            <div class="form-group"><label for="first_name"><strong>Receipt Number</strong><br></label>{{form1.rec_no}}<!-- <input class="form-control" type="text" name="rno" inputmode="numeric"> --></div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="form-group"><label for="first_name"><strong>Receipt Date</strong><br></label>{{form1.rec_date}}<!-- <input class="form-control" type="date" name="rdate"> --></div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <div class="form-row">
+                                                    <div class="col"><label class="col-form-label" for="username"><strong>Subscription</strong><br></label></div>
+                                                </div>
+                                                <div class="form-row">
+                                                    <div class="col"><small class="text-success">Start On</small>{{form1.start_on}}<!-- <input class="form-control" type="date" name="sso"> --></div>
+                                                    <div class="col"><small class="text-danger">End On</small>{{form1.end_on}}<!-- <input class="form-control" type="date" name="seo"> --></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> 
+                                                             
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </form>
+            </div>
+        {% endblock %}
